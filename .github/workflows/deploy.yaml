@@ -19,4 +19,4 @@ jobs:
 
       - run: docker push nicolakoo/web-client
       - run: docker push nicolakoo/web-nginx
-      - run: docker push nicolakoo/web/server
+      - run: docker push nicolakoo/web-server
