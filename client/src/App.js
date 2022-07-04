@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import { useState } from 'react/cjs/react.production.min';
+import react from 'react';
+import { useState } from 'react';
 
-const [mess, setMess] = useState("Start")
+const [mess, setMess] = useState('Start');
 const [count, setCount] = useState(0)
 
 const onButtonClick = () => {
