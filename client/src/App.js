@@ -4,20 +4,24 @@ import axios from 'axios';
 import react from 'react';
 import { useState } from 'react';
 
-const [mess, setMess] = useState('Start');
-const [count, setCount] = useState(0)
 
-const onButtonClick = () => {
-  const callAPI = async () => {
-    const basicResponse = await axios.get('/api/message');
-    console.log(basicResponse)
-    setMess(basicResponse)
-    setCount(count + 1)
-  }
-  callAPI();  
-}
+
+
 
 function App() {
+  const [mess, setMess] = useState('Start');
+  const [count, setCount] = useState(0)
+
+  const onButtonClick = () => {
+    const callAPI = async () => {
+      const basicResponse = await axios.get('/api/message');
+      console.log(basicResponse)
+      setMess(basicResponse)
+      setCount(count + 1)
+    }
+    callAPI();  
+  }
+
   return (
     <div>
       <h1>Hi there! ***</h1>
