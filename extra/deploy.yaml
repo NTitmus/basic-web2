@@ -20,3 +20,18 @@ jobs:
       - run: docker push nicolakoo/web-client
       - run: docker push nicolakoo/web-nginx
       - run: docker push nicolakoo/web-server
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: basic-web2
+          environment_name: Basicweb2-env
+          existing_bucket_name: elasticbeanstalk-eu-west-2-495320649485
+          region: eu-west-2
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
