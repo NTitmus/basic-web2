@@ -22,28 +22,30 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Build, tag, and push client image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: docker_number_game_demo
-          IMAGE_TAG: basic-web2v1
+          IMAGE_TAG: basic-web2-client
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./client
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      
+      - name: Build, tag, and push nginx image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: docker_number_game_demo
+          IMAGE_TAG: basic-web2-nginx
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./nginx
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      
+      - name: Build, tag, and push server image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: docker_number_game_demo
+          IMAGE_TAG: basic-web2-server
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./server
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-
-
-
-
-      - uses: actions/checkout@v2
-      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD}}
-      - run: docker build -t nicolakoo/react-test -f ./client/Dockerfile.dev ./client
-      - run: docker run -e CI=true nicolakoo/react-test npm test
-
-      - run: docker build -t nicolakoo/web-client ./client
-      - run: docker build -t nicolakoo/web-nginx ./nginx
-      - run: docker build -t nicolakoo/web-server ./server
-
-      - run: docker push nicolakoo/web-client
-      - run: docker push nicolakoo/web-nginx
-      - run: docker push nicolakoo/web-server
