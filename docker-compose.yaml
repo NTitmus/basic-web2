@@ -1,0 +1,22 @@
+version: '3'
+services:
+  client:
+    image: "nicolakoo/web-client"
+    mem_limit: 128m
+    hostname: client
+    networks:
+      - basic-network
+  nginx:
+    depends_on:
+      - client
+    image: "nicolakoo/web-nginx"
+    mem_limit: 256m
+    hostname: nginx
+    ports:
+      - 80:80
+    networks:
+      - basic-network
+
+networks:
+  basic-network:
+    driver: bridge
