@@ -9,8 +9,10 @@ services:
     mem_limit: 128m
     hostname: api
   nginx:
+    depends_on:
+      - server
+      - client
     image: "nicolakoo/web-nginx"
-    mem_limit: 128m
-    hostname: nginx
+    mem_limit: 256m
     ports:
       - "80:80"
