@@ -5,7 +5,7 @@ services:
     mem_limit: 128m
     networks:
       - basic-network
-  apiServer:
+  apiserver:
     image: "nicolakoo/web-server"
     mem_limit: 128m
     networks:
