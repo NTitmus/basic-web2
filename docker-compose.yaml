@@ -11,10 +11,10 @@ services:
     networks:
       - basic-network
   nginx:
-    restart: always
+    restart: always 
     depends_on:
       - client
-      - apiServer
+      - apiserver
     image: "nicolakoo/web-nginx"
     mem_limit: 256m
     ports:
